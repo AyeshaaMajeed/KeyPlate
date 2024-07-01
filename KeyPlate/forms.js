@@ -1,8 +1,17 @@
 // Save the registered users in local storage
 function saveUser(user) {
     let users = JSON.parse(localStorage.getItem('users')) || [];
-    users.push(user);
-    localStorage.setItem('users', JSON.stringify(users));
+    let emailExists = users.some(u => u.email === user.email);
+
+    if (emailExists) {
+        document.getElementById('register-email-error').innerText = "Email is already in use";
+        document.getElementById('register-email-error').style.display = "block";
+        return false;
+    } else {
+        users.push(user);
+        localStorage.setItem('users', JSON.stringify(users));
+        return true;
+    }
 }
 
 // Validate registration form
@@ -56,11 +65,13 @@ function submitRegister() {
     }
 
     if (isValid) {
-        saveUser({ name, username, email, password });
-        alert("Registration successful!");
-        location.href = 'login.html';
+        if (saveUser({ name, username, email, password })) {
+            alert("Registration successful!");
+            location.href = 'login.html';
+        }
     }
 }
+
 
 // Validate login form
 function submitLogin() {
