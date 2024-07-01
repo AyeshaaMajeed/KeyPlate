@@ -2,9 +2,9 @@ body, html {
     margin: 0;
     padding: 0;
     height: 100%;
-    font-family: 'Lato', sans-serif; /* Default font as fallback */
-    color: #333; /* Default text color */
-    background-color: #fff; /* Default background color */
+    font-family: 'Lato', sans-serif; 
+    color: #333; 
+    background-color: #fff; 
 }
 
 .video-container {
@@ -29,7 +29,7 @@ body, html {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.2); /* Semi-transparent overlay */
+    background-color: rgba(0, 0, 0, 0.2); 
 }
 
 .content {
@@ -41,7 +41,7 @@ body, html {
     display: flex;
     justify-content: center;
     align-items: center;
-    color: #fff; /* Text color for content */
+    color: #fff;
     z-index: 1;
 }
 
@@ -53,33 +53,33 @@ body, html {
 }
 
 .navbar-links a {
-    color: brown; /* Navbar links color */
+    color: brown;
     text-decoration: none;
     margin-left: 10px;
-    font-family: 'Montserrat', sans-serif; /* Use Montserrat font for navbar links */
-    font-weight: 700; /* Bold font weight */
+    font-family: 'Montserrat', sans-serif; 
+    font-weight: 700; 
 }
 
 .line {
     position: absolute;
-    bottom: 100px; /* Adjust the distance from the bottom as needed */
+    bottom: 100px;
     left: 50%;
     transform: translateX(-50%);
-    font-family: 'Montserrat', sans-serif; /* Use Montserrat font for .line */
-    font-size: 20px; /* Adjust font size as needed */
+    font-family: 'Montserrat', sans-serif; 
+    font-size: 20px;
     color: brown;
 }
 
 .get-started-button {
     position: absolute;
-    bottom: 60px; /* Adjust the distance from the bottom as needed */
+    bottom: 60px; 
     left: 50%;
     transform: translateX(-50%);
-    padding: 15px 30px; /* Increase padding for a larger button */
-    background-color: brown; /* Button background color */
-    color: #fff; /* Button text color */
+    padding: 15px 30px; 
+    background-color: brown; 
+    color: #fff; 
     text-decoration: none;
     border-radius: 10px;
-    font-family: 'Montserrat', sans-serif; /* Use Montserrat font for .get-started-button */
-    font-weight: 700; /* Bold font weight */
+    font-family: 'Montserrat', sans-serif; 
+    font-weight: 700; 
 }
