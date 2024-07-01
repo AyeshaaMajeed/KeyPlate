@@ -1,0 +1,139 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: 'Lato', sans-serif;
+    background-color: #f5d0d0;
+    color: #333;
+}
+
+nav {
+    background-color: brown;
+    color: #fff;
+    padding: 2px;
+    text-align: center;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+}
+
+nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+}
+
+nav li {
+    margin: 0 15px;
+}
+
+nav a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: 400;
+}
+
+.search-container {
+    position: sticky;
+    top: 0;
+    background-color: #f4b8b8;
+    padding: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+label {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+    color: brown;
+    margin-right: 10px;
+}
+
+input {
+    padding: 10px;
+    margin-right: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+button {
+    padding: 10px 20px;
+    background-color: brown;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+}
+
+button:hover {
+    background-color: #555;
+}
+
+.recipe-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 20px;
+}
+
+.recipe {
+    border: 1px solid #ddd;
+    padding: 20px;
+    margin: 10px;
+    border-radius: 10px;
+    background: #efe5e5;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 300px;
+    box-sizing: border-box;
+    position: relative;
+}
+
+.recipe img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 5px;
+}
+
+.buttons {
+    margin-top: 10px;
+}
+
+button.option {
+    margin: 5px;
+}
+
+.recipe .dots {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+}
+
+.recipe .dropdown {
+    display: none;
+    position: absolute;
+    top: 30px;
+    right: 10px;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.recipe .dropdown button {
+    background: none;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    width: 100%;
+    text-align: left;
+}

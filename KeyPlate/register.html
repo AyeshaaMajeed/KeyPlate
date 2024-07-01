@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <link rel="stylesheet" href="formstyles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Lato&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="form-container">
+        <div class="form-box">
+            <h1>Register</h1>
+            <form id="registerForm">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" placeholder="Enter name" required>
+                <span class="error-message" id="name-error"></span>
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" placeholder="Enter username" required>
+                <span class="error-message" id="username-error"></span>
+                <label for="email">Email address:</label>
+                <input type="email" id="email" name="email" placeholder="Enter email" required>
+                <span class="error-message" id="register-email-error"></span>
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" placeholder="Enter password" required>
+                <span class="error-message" id="register-password-error"></span>
+                <label for="confirm-password">Confirm Password:</label>
+                <input type="password" id="confirm-password" name="confirm-password" placeholder="Confirm password" required>
+                <span class="error-message" id="confirm-password-error"></span>
+                <button type="button" onclick="submitRegister()">Confirm</button>
+            </form>
+            <br>
+            <button onclick="location.href='login.html'">Back to Login</button>
+        </div>
+    </div>
+    <script src="forms.js"></script>
+</body>
+</html>

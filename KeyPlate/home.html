@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KeyPlate</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Lato&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav>
+        <h1>KeyPlate</h1>
+        <ul>
+            <li><a href="#" id="homeLink">Home</a></li>
+            <li><a href="#" id="favoritesLink">Favorites</a></li>
+            <li><a href="#" id="logoutLink">Logout</a></li>
+        </ul>
+    </nav>
+    <div class="search-container">
+        <form id="recipeForm">
+            <label for="mainIngredient">Enter Main Ingredient:</label>
+            <input type="text" id="mainIngredient" name="mainIngredient" required>
+            <button type="submit">Search</button>
+        </form>
+    </div>
+    <div id="recipeContainer" class="recipe-container"></div>
+    <div id="favoritesContainer" class="recipe-container" style="display:none;"></div>
+
+    <script src="scripts.js"></script>
+</body>
+</html>
