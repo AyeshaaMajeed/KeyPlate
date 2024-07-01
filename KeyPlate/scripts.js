@@ -84,14 +84,14 @@ function addToFavorites(index, id, name, image) {
         const dropdownId = `dropdown-${index}`;
         const dropdown = document.getElementById(dropdownId);
         if (dropdown) {
-            dropdown.style.display = 'none'; // Set display to none to hide the dropdown
+            dropdown.style.display = 'none'; 
         }
     } else {
         alert(`${name} is already in favorites`);
         const dropdownId = `dropdown-${index}`;
         const dropdown = document.getElementById(dropdownId);
         if (dropdown) {
-            dropdown.style.display = 'none'; // Set display to none to hide the dropdown
+            dropdown.style.display = 'none'; 
         }
     }
 }
