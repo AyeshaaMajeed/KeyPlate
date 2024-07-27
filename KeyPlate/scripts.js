@@ -1,60 +1,71 @@
-const edamamAppId = 'b6a59d3a';
-const edamamApiKey = '46f4a96bd135a8452e7d0b6973b0a859';
+const edamamAppId = "b6a59d3a";
+const edamamApiKey = "46f4a96bd135a8452e7d0b6973b0a859";
 
 // Check if user is logged in
-const currentUser = JSON.parse(localStorage.getItem('loggedInUser'));
+const currentUser = JSON.parse(localStorage.getItem("loggedInUser"));
 if (!currentUser) {
-    window.location.href = 'login.html';
+  window.location.href = "login.html";
 }
 
 // Initialize favorites for the current user
 let userFavoritesKey = `favorites_${currentUser.email}`;
 let favorites = JSON.parse(localStorage.getItem(userFavoritesKey)) || [];
 
-document.getElementById('recipeForm').addEventListener('submit', function(event) {
+document
+  .getElementById("recipeForm")
+  .addEventListener("submit", function (event) {
     event.preventDefault();
-    const mainIngredient = document.getElementById('mainIngredient').value.trim().toLowerCase();
+    const mainIngredient = document
+      .getElementById("mainIngredient")
+      .value.trim()
+      .toLowerCase();
     fetchRecipes(mainIngredient);
+  });
+
+document.getElementById("homeLink").addEventListener("click", function () {
+  document.getElementById("recipeContainer").style.display = "flex";
+  document.getElementById("favoritesContainer").style.display = "none";
 });
 
-document.getElementById('homeLink').addEventListener('click', function() {
-    document.getElementById('recipeContainer').style.display = 'flex';
-    document.getElementById('favoritesContainer').style.display = 'none';
+document.getElementById("favoritesLink").addEventListener("click", function () {
+  displayFavorites();
+  document.getElementById("recipeContainer").style.display = "none";
+  document.getElementById("favoritesContainer").style.display = "flex";
 });
 
-document.getElementById('favoritesLink').addEventListener('click', function() {
-    displayFavorites();
-    document.getElementById('recipeContainer').style.display = 'none';
-    document.getElementById('favoritesContainer').style.display = 'flex';
-});
-
-document.getElementById('logoutLink').addEventListener('click', function() {
-    localStorage.removeItem('loggedInUser');
-    window.location.href = 'index.html';
+document.getElementById("logoutLink").addEventListener("click", function () {
+  localStorage.removeItem("loggedInUser");
+  window.location.href = "index.html";
 });
 
 async function fetchRecipes(mainIngredient) {
-    try {
-        const response = await fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?i=${encodeURIComponent(mainIngredient)}`);
-        const data = await response.json();
-        if (data.meals) {
-            displayRecipes(data.meals);
-        } else {
-            document.getElementById('recipeContainer').innerHTML = '<p>No recipes found with the given ingredient.</p>';
-        }
-    } catch (error) {
-        console.error('Error fetching recipes:', error);
-        document.getElementById('recipeContainer').innerHTML = '<p>Error fetching recipes. Please try again later.</p>';
+  try {
+    const response = await fetch(
+      `https://www.themealdb.com/api/json/v1/1/filter.php?i=${encodeURIComponent(
+        mainIngredient
+      )}`
+    );
+    const data = await response.json();
+    if (data.meals) {
+      displayRecipes(data.meals);
+    } else {
+      document.getElementById("recipeContainer").innerHTML =
+        "<p>No recipes found with the given ingredient.</p>";
     }
+  } catch (error) {
+    console.error("Error fetching recipes:", error);
+    document.getElementById("recipeContainer").innerHTML =
+      "<p>Error fetching recipes. Please try again later.</p>";
+  }
 }
 
 function displayRecipes(recipes) {
-    const recipeContainer = document.getElementById('recipeContainer');
-    recipeContainer.innerHTML = '';
-    recipes.forEach((recipe, index) => {
-        const recipeElement = document.createElement('div');
-        recipeElement.className = 'recipe';
-        recipeElement.innerHTML = `
+  const recipeContainer = document.getElementById("recipeContainer");
+  recipeContainer.innerHTML = "";
+  recipes.forEach((recipe, index) => {
+    const recipeElement = document.createElement("div");
+    recipeElement.className = "recipe";
+    recipeElement.innerHTML = `
             <h3>${recipe.strMeal}</h3>
             <img src="${recipe.strMealThumb}" alt="${recipe.strMeal}" />
             <div class="dots" onclick="toggleDropdown(${index})">...</div>
@@ -66,49 +77,52 @@ function displayRecipes(recipes) {
                 <button class="option" onclick="calculateCalories('${recipe.idMeal}')">Calculate Total Calories</button>
             </div>
         `;
-        recipeContainer.appendChild(recipeElement);
-    });
+    recipeContainer.appendChild(recipeElement);
+  });
 }
 
 function toggleDropdown(index) {
-    const dropdown = document.getElementById(`dropdown-${index}`);
-    dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+  const dropdown = document.getElementById(`dropdown-${index}`);
+  dropdown.style.display =
+    dropdown.style.display === "block" ? "none" : "block";
 }
 
 function addToFavorites(index, id, name, image) {
-    if (!favorites.some(recipe => recipe.id === id)) {
-        const recipe = { id, name, image };
-        favorites.push(recipe);
-        localStorage.setItem(userFavoritesKey, JSON.stringify(favorites));
-        alert(`${name} added to favorites`);
-        const dropdownId = `dropdown-${index}`;
-        const dropdown = document.getElementById(dropdownId);
-        if (dropdown) {
-            dropdown.style.display = 'none'; 
-        }
-    } else {
-        alert(`${name} is already in favorites`);
-        const dropdownId = `dropdown-${index}`;
-        const dropdown = document.getElementById(dropdownId);
-        if (dropdown) {
-            dropdown.style.display = 'none'; 
-        }
+  if (!favorites.some((recipe) => recipe.id === id)) {
+    const recipe = { id, name, image };
+    favorites.push(recipe);
+    localStorage.setItem(userFavoritesKey, JSON.stringify(favorites));
+    alert(`${name} added to favorites`);
+
+    const dropdownId = `dropdown-${index}`;
+    const dropdown = document.getElementById(dropdownId);
+    if (dropdown) {
+      dropdown.style.display = "none";
     }
+  } else {
+    alert(`${name} is already in favorites`);
+
+    const dropdownId = `dropdown-${index}`;
+    const dropdown = document.getElementById(dropdownId);
+    if (dropdown) {
+      dropdown.style.display = "none";
+    }
+  }
 }
 
 function removeFromFavorites(id) {
-    favorites = favorites.filter(recipe => recipe.id !== id);
-    localStorage.setItem(userFavoritesKey, JSON.stringify(favorites));
-    displayFavorites();
+  favorites = favorites.filter((recipe) => recipe.id !== id);
+  localStorage.setItem(userFavoritesKey, JSON.stringify(favorites));
+  displayFavorites();
 }
 
 function displayFavorites() {
-    const favoritesContainer = document.getElementById('favoritesContainer');
-    favoritesContainer.innerHTML = '';
-    favorites.forEach(recipe => {
-        const recipeElement = document.createElement('div');
-        recipeElement.className = 'recipe';
-        recipeElement.innerHTML = `
+  const favoritesContainer = document.getElementById("favoritesContainer");
+  favoritesContainer.innerHTML = "";
+  favorites.forEach((recipe) => {
+    const recipeElement = document.createElement("div");
+    recipeElement.className = "recipe";
+    recipeElement.innerHTML = `
             <h3>${recipe.name}</h3>
             <img src="${recipe.image}" alt="${recipe.name}" />
             <div class="buttons">
@@ -116,56 +130,148 @@ function displayFavorites() {
                 <button class="option" onclick="removeFromFavorites('${recipe.id}')">Remove from Favorites</button>
             </div>
         `;
-        favoritesContainer.appendChild(recipeElement);
-    });
+    favoritesContainer.appendChild(recipeElement);
+  });
 }
 
 async function viewRecipeAndIngredients(idMeal) {
-    const recipeDetails = await fetchRecipeDetails(idMeal);
-    if (recipeDetails) {
-        const ingredients = getIngredientsArray(recipeDetails).join(', ');
-        alert(`Recipe for ${recipeDetails.strMeal}:\n\nIngredients: ${ingredients}\n\nInstructions: ${recipeDetails.strInstructions}`);
-    }
-}
-
-async function calculateCalories(idMeal) {
-    const recipeDetails = await fetchRecipeDetails(idMeal);
-    if (recipeDetails) {
-        const response = await fetch(`https://api.edamam.com/api/nutrition-details?app_id=${edamamAppId}&app_key=${edamamApiKey}`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ title: recipeDetails.strMeal, ingr: getIngredientsArray(recipeDetails) }),
-        });
-        const data = await response.json();
-        if (data.totalNutrients) {
-            alert(`Total calories for ${recipeDetails.strMeal}: ${data.totalNutrients.ENERC_KCAL.quantity} kcal`);
-        } else {
-            alert(`Could not calculate calories for ${recipeDetails.strMeal}`);
-        }
-    }
+  const recipeDetails = await fetchRecipeDetails(idMeal);
+  if (recipeDetails) {
+    const ingredients = getIngredientsArray(recipeDetails).join(", ");
+    alert(
+      `Recipe for ${recipeDetails.strMeal}:\n\nIngredients: ${ingredients}\n\nInstructions: ${recipeDetails.strInstructions}`
+    );
+  }
 }
 
 async function fetchRecipeDetails(idMeal) {
-    try {
-        const response = await fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${idMeal}`);
-        const data = await response.json();
-        return data.meals ? data.meals[0] : null;
-    } catch (error) {
-        console.error('Error fetching recipe details:', error);
-        return null;
-    }
+  try {
+    const response = await fetch(
+      `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${idMeal}`
+    );
+    const data = await response.json();
+    return data.meals ? data.meals[0] : null;
+  } catch (error) {
+    console.error("Error fetching recipe details:", error);
+    return null;
+  }
 }
 
 function getIngredientsArray(recipeDetails) {
-    const ingredients = [];
-    for (let i = 1; i <= 20; i++) {
-        const ingredient = recipeDetails[`strIngredient${i}`];
-        const measure = recipeDetails[`strMeasure${i}`];
-        if (ingredient && measure) {
-            ingredients.push(`${measure.trim()} ${ingredient.trim()}`);
-        }
+  const ingredients = [];
+  for (let i = 1; i <= 20; i++) {
+    const ingredient = recipeDetails[`strIngredient${i}`];
+    const measure = recipeDetails[`strMeasure${i}`];
+    if (ingredient && measure) {
+      ingredients.push(`${measure.trim()} ${ingredient.trim()}`);
     }
-    return ingredients;
+  }
+  return ingredients;
+}
+
+async function viewRecipeAndIngredients(idMeal) {
+  const recipeDetails = await fetchRecipeDetails(idMeal);
+  if (recipeDetails) {
+    showRecipeCard(recipeDetails);
+  }
+}
+
+const cardContainer = document.getElementById("cardContainer");
+const recipeCard = document.querySelector(".recipe-card");
+const closeButton = document.querySelector(".close");
+
+function showRecipeCard(title, ingredients, instructions) {
+  // Populate the card with recipe data
+  recipeCard.innerHTML = `
+    <h2>${title}</h2>
+    <p><b>Ingredients:</b></p>
+    <ul>
+      ${ingredients}
+    </ul>
+    <p><b>Instructions:</b></p>
+    <p>${instructions}</p>
+    <button class="close" onclick="hideRecipeCard()">X</button>
+  `;
+
+  cardContainer.style.display = "flex";
+}
+
+function showCalorieCard(title, calories) {
+  // Populate the card with calorie data
+  recipeCard.innerHTML = `
+    <h2>${title}</h2>
+    <p><b>Total Calories:</b></p>
+    <p>${calories} kcal</p>
+    <button class="close" onclick="hideRecipeCard()">X</button>
+  `;
+
+  cardContainer.style.display = "flex";
+}
+
+function hideRecipeCard() {
+  cardContainer.style.display = "none";
+}
+
+async function viewRecipeAndIngredients(idMeal) {
+  const recipeDetails = await fetchRecipeDetails(idMeal);
+  if (recipeDetails) {
+    const ingredients = getIngredientsArray(recipeDetails).join("<br>");
+    showRecipeCard(
+      recipeDetails.strMeal,
+      ingredients,
+      recipeDetails.strInstructions
+    );
+  }
+}
+
+async function calculateCalories(idMeal) {
+  const recipeDetails = await fetchRecipeDetails(idMeal);
+  if (recipeDetails) {
+    const response = await fetch(
+      `https://api.edamam.com/api/nutrition-details?app_id=${edamamAppId}&app_key=${edamamApiKey}`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          title: recipeDetails.strMeal,
+          ingr: getIngredientsArray(recipeDetails),
+        }),
+      }
+    );
+    const data = await response.json();
+    if (data.totalNutrients) {
+      showCalorieCard(
+        recipeDetails.strMeal,
+        data.totalNutrients.ENERC_KCAL.quantity
+      );
+    } else {
+      alert(`Could not calculate calories for ${recipeDetails.strMeal}`);
+    }
+  }
+}
+
+function getIngredientsArray(recipeDetails) {
+  const ingredients = [];
+  for (let i = 1; i <= 20; i++) {
+    const ingredient = recipeDetails[`strIngredient${i}`];
+    const measure = recipeDetails[`strMeasure${i}`];
+    if (ingredient && measure) {
+      ingredients.push(`${measure.trim()} ${ingredient.trim()}`);
+    }
+  }
+  return ingredients;
+}
+
+function getIngredientsList(recipeDetails) {
+  let ingredientsList = "";
+  for (let i = 1; i <= 20; i++) {
+    const ingredient = recipeDetails[`strIngredient${i}`];
+    const measure = recipeDetails[`strMeasure${i}`];
+    if (ingredient && measure) {
+      ingredientsList += `<li>${measure.trim()} ${ingredient.trim()}</li>`;
+    }
+  }
+  return ingredientsList;
 }
